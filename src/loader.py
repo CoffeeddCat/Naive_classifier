@@ -36,16 +36,21 @@ import numpy as np
 from sklearn.model_selection import train_test_split
 
 class Loader:
-    def __init__(self, label_file_path, data_file_path, label_choose, training_set_percent):
+    def __init__(self, label_file_path, data_file_path, label_choose, training_set_percent, first_time_to_read_file):
         self.label_file_path = label_file_path
         self.data_file_path = data_file_path
         self.label_choose = label_choose
         self.training_set_percent = training_set_percent
+        if first_time_to_read_file:
+            self.initialize_label()
+            self.initialize_data()
+        else:
+            self.data = np.load(NPY_X_PATH)
+            self.label_data = np.load(NPY_Y_PATH)
+            print("load data from npy over.")
 
-        self.initialize_label()
-        self.initialize_data()
-
-        self.mix_and_separate()
+        if DATA_DIVIDE:
+            self.mix_and_separate()
 
     def initialize_label(self):
         print("now initializing label...")
@@ -79,7 +84,7 @@ class Loader:
                 self.number_to_label.append(line_list[self.label_choose])
                 self.class_number += 1
             line_index += 1
-
+        np.save(NPY_Y_PATH,self.label_data)
         # print(self.label_dict)
         # print(self.number_to_label)
         # print(self.label_data)
@@ -114,13 +119,13 @@ class Loader:
             for i in range(1, len(line_list)):
                 self.data[i-1][feature_index] = float(line_list[i])
             feature_index += 1
-
+        np.save(NPY_X_PATH, self.data)
         self.data_file.close()
         print("initializing data done.")
 
     def mix_and_separate(self):
-        # print(self.label_data)
-        # print(self.data)
+        # print(self.label_data.shape)
+        # print(self.data.shape)
         self.x_train, self.x_test, self.y_train, self.y_test = train_test_split(
             self.data, self.label_data, test_size = 1 - self.training_set_percent)
         # print(self.x_test)
@@ -128,4 +133,4 @@ class Loader:
 
 # for test
 if __name__ == "__main__":
-    loader = Loader(LABEL_FILE_PATH, DATA_FILE_PATH, 10, TRAINING_SET_PERCENT)
+    loader = Loader(LABEL_FILE_PATH, DATA_FILE_PATH, 10, TRAINING_SET_PERCENT, FIRST_TIME_TO_READ_FILE)
