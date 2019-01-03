@@ -84,7 +84,7 @@ class Loader:
                 self.number_to_label.append(line_list[self.label_choose])
                 self.class_number += 1
             line_index += 1
-        np.save(NPY_Y_PATH,self.label_data)
+        np.save(NPY_Y_PATH + '_' + str(self.label_choose), self.label_data)
         # print(self.label_dict)
         # print(self.number_to_label)
         # print(self.label_data)
