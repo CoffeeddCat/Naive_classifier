@@ -1,6 +1,4 @@
 import tensorflow as tf
-import numpy as np
-from config import *
 
 class Network:
     def __init__(self, fc_nums, activation_fn, input_num, learning_rate):
