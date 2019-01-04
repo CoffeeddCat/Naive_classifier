@@ -141,7 +141,7 @@ class Loader:
         satisfy_number = 0
         now_index = 0
         while now_index<self.data.shape[0]:
-            if (self.number_in_class[self.number_to_label[self.label_data[now_index][0]]]< 30):
+            if (self.number_in_class[self.number_to_label[self.label_data[now_index][0]]]< 30 or self.number_to_label[self.label_data[now_index][0]] == '  '):
                 # self.data = np.delete(self.data, now_index, axis=0)
                 # self.label_data = np.delete(self.label_data, now_index, axis=0)
                 pass
@@ -155,7 +155,7 @@ class Loader:
         satisfy_number = 0
         now_index = 0
         while now_index < self.data.shape[0]:
-            if (self.number_in_class[self.number_to_label[self.label_data[now_index][0]]]< 30):
+            if (self.number_in_class[self.number_to_label[self.label_data[now_index][0]]]< 30 or self.number_to_label[self.label_data[now_index][0]] == '  '):
                 pass
             else:
                 self.data_new[satisfy_number] = self.data[now_index]
@@ -206,4 +206,4 @@ class Loader:
 
 # for test
 if __name__ == "__main__":
-    loader = Loader(LABEL_FILE_PATH, DATA_FILE_PATH, 7, TRAINING_SET_PERCENT, FIRST_TIME_TO_READ_FILE)
+    loader = Loader(LABEL_FILE_PATH, DATA_FILE_PATH, 5, TRAINING_SET_PERCENT, FIRST_TIME_TO_READ_FILE)

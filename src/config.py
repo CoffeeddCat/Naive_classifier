@@ -1,4 +1,4 @@
-FIRST_TIME_TO_READ_FILE = False
+FIRST_TIME_TO_READ_FILE = True
 
 LABEL_FILE_PATH = "../data/E-TABM-185.sdrf.txt"
 DATA_FILE_PATH = "../data/microarray.original.txt"
