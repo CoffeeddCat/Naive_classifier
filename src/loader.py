@@ -93,7 +93,7 @@ class Loader:
                 self.number_in_class[line_list[self.label_choose]] += 1
             except KeyError:
                 self.label_dict[line_list[self.label_choose]] = self.class_number
-                self.number_in_class[line_list[self.label_choose]] = 0
+                self.number_in_class[line_list[self.label_choose]] = 1
                 self.label_data[line_index][0] = self.label_dict[line_list[self.label_choose]]
                 self.number_to_label.append(line_list[self.label_choose])
                 self.class_number += 1
@@ -176,7 +176,7 @@ class Loader:
         self.label_dict = {}
         new_index = 0
         for key in self.number_in_class:
-            if self.number_in_class[key] >= 30:
+            if self.number_in_class[key] >= 30 and key != '  ':
                 self.label_dict[key] = new_index
                 new_index += 1
                 self.number_to_label_new.append(key)
