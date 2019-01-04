@@ -22,7 +22,7 @@ C_list = [0.1, 1, 5, 10]
 for l in label:
     for k in kernel_list:
         for gm in gamma_list:
-            for C_ in C_list
+            for C_ in C_list:
                 param = {
                     'kernel':kernel_list[k],
                     'degree': 3,
