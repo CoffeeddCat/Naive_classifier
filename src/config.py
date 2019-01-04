@@ -2,8 +2,8 @@ FIRST_TIME_TO_READ_FILE = False
 
 LABEL_FILE_PATH = "../data/E-TABM-185.sdrf.txt"
 DATA_FILE_PATH = "../data/microarray.original.txt"
-NPY_X_PATH = "../data/x_data.npy"
-NPY_Y_PATH = "../data/y_data.npy"
+NPY_X_PATH = "../data/x_data"
+NPY_Y_PATH = "../data/y_data"
 
 DATA_DIVIDE = True
 TRAINING_SET_PERCENT = 0.8
