@@ -15,22 +15,27 @@ from sklearn.metrics import f1_score
 # parser.add_argument('-l', '--label', type=int, default=0)
 # args = parser.parse_args()
 
+label = [2, 4, 5, 7]
 kernel_list=[ 'linear', 'poly', 'rbf', 'sigmoid', 'precomputed']
+gamma_list = [1e-5, 1e-4, 1e-3, 1e-2, 1e-1, 1]
+C_list = [0.1, 1, 5, 10]
+for l in label:
+    for k in kernel_list:
+        for gm in gamma_list:
+            for C_ in C_list
+                param = {
+                    'kernel':kernel_list[k],
+                    'degree': 3,
+                    'gamma':gm,
+                    'C':C_
+                }
 
-param = {
-    'kernel':'poly',
-    'degree': 3,
-    'gamma':1e-3,
-    'C':1
-}
+                loader = loader.Loader(LABEL_FILE_PATH, DATA_FILE_PATH, l, TRAINING_SET_PERCENT, False)
 
-label = 2
-loader = loader.Loader(LABEL_FILE_PATH, DATA_FILE_PATH, label, TRAINING_SET_PERCENT, False)
+                classifier = SVC(**param)
+                classifier.fit(loader.x_train, np.squeeze(loader.y_train))
+                y_predict = classifier.predict(loader.x_test)
 
-classifier = SVC(**param)
-classifier.fit(loader.x_train, np.squeeze(loader.y_train))
-y_predict = classifier.predict(loader.x_test)
-
-print('label:', label)
-print(param)
-print(f1_score(np.squeeze(loader.y_test), y_predict, average='macro'))
+                print('label:', l)
+                print(param)
+                print(f1_score(np.squeeze(loader.y_test), y_predict, average='macro'))
