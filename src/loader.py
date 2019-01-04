@@ -206,4 +206,4 @@ class Loader:
 
 # for test
 if __name__ == "__main__":
-    loader = Loader(LABEL_FILE_PATH, DATA_FILE_PATH, 5, TRAINING_SET_PERCENT, FIRST_TIME_TO_READ_FILE)
+    loader = Loader(LABEL_FILE_PATH, DATA_FILE_PATH, 7, TRAINING_SET_PERCENT, FIRST_TIME_TO_READ_FILE)
