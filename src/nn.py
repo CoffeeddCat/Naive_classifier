@@ -6,7 +6,7 @@ from nn_model import Network
 from config import *
 
 if __name__ == '__main__':
-    network = Network([], tf.nn.relu, 22283, 1e-4)
+    network = Network([512, 256, 128], tf.nn.relu, 22283, 1e-4)
     loader = loader.Loader(LABEL_FILE_PATH, DATA_FILE_PATH, 10, TRAINING_SET_PERCENT, FIRST_TIME_TO_READ_FILE)
 
     train_step = 10000

@@ -37,6 +37,7 @@ class Network:
         self.sess.run([self.loss, self.trainer], feed_dict={
             self.input_ph: input_x
         })
+        print(self.loss)
         return self.loss
 
     def output(self, input_x, input_y):
