@@ -6,8 +6,8 @@ from nn_model import Network
 from config import *
 
 if __name__ == '__main__':
-    network = Network([256, 128, 64, 9], tf.nn.relu, 22283, 1e-4)
-    loader = Loader(LABEL_FILE_PATH, DATA_FILE_PATH, 2, TRAINING_SET_PERCENT, FIRST_TIME_TO_READ_FILE)
+    network = Network([256, 128, 64, 29], tf.nn.relu, 300, 1e-2)
+    loader = Loader(LABEL_FILE_PATH, DATA_FILE_PATH, 7, TRAINING_SET_PERCENT, FIRST_TIME_TO_READ_FILE)
 
     # max= 0
     #
@@ -16,11 +16,12 @@ if __name__ == '__main__':
     #         max = loader.y_train[i][0]
     # print(max)
 
-    train_step = 10000
+    train_step = 2000
 
     for i in range(train_step):
         network.train(loader.x_train, np.squeeze(loader.y_train))
 
     y_predict = np.squeeze(network.output(loader.x_test))
-
+    print(y_predict)
+    print(np.squeeze(loader.y_test))
     print(f1_score(np.squeeze(loader.y_test), y_predict, average='macro'))

@@ -51,7 +51,7 @@ class Network:
             print("now train step: %d"%self.train_step, "now loss % f"%loss)
         return self.loss
 
-    def output(self, input_x, input_y):
+    def output(self, input_x):
         return self.sess.run(self.out, feed_dict={
             self.input_ph: input_x
         })

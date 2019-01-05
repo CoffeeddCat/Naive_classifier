@@ -46,7 +46,7 @@ class Loader:
             self.initialize_data()
             self.delete_small_data()
         else:
-            self.data = np.load(NPY_X_PATH + '_' + str(self.label_choose) + '.npy')
+            self.data = np.load(NPY_X_PATH + '_reduced_' + str(self.label_choose) + '.npy')
             print(self.data)
             self.label_data = np.load(NPY_Y_PATH + '_' + str(self.label_choose) + '.npy')
             print(self.label_data)
