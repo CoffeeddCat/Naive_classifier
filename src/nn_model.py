@@ -9,7 +9,10 @@ class Network:
         self.train_step = 0
         self.init_network()
 
-        self.sess = tf.Session()
+        conf = tf.ConfigProto(allow_soft_placement=True, log_device_placement=False)
+        conf.gpu_options.allow_growth=True
+
+        self.sess = tf.Session(config=conf)
         self.sess.run(tf.initialize_all_variables())
 
     def init_network(self):
