@@ -1,9 +1,12 @@
 import tensorflow as tf
+import numpy as np
+from loader import Loader
+from config import *
 
 class Autoencoder:
     def __init__(self, fc_nums, activation_fn, input_num, learning_rate, model_load_path):
-        self.fc_nums = fc_nums
-        # self.fc_nums = [2048, 1024, 256]
+        # self.fc_nums = fc_nums
+        self.fc_nums = [2048, 1024, 256]
         self.activation_fn = activation_fn
         self.input_num = input_num
         self.learning_rate = learning_rate
@@ -64,4 +67,11 @@ class Autoencoder:
     def model_load(self):
         self.saver.restore(self.sess, self.model_load_path)
 
+if __name__ == "__main__":
+    ae = Autoencoder()
+    loader = Loader(LABEL_FILE_PATH, DATA_FILE_PATH, 7, TRAINING_SET_PERCENT, FIRST_TIME_TO_READ_FILE)
+    
+    train_step = 2000
 
+    for i in range(train_step):
+        Autoencoder.train(loader.x_train, np.squeeze(loader.y_train))
