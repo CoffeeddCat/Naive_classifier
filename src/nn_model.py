@@ -6,15 +6,17 @@ class Network:
         self.activation_fn = activation_fn
         self.input_num = input_num
         self.learning_rate = learning_rate
-
+        self.train_step = 0
         self.init_network()
 
         self.sess = tf.Session()
-        self.sess.run(tf.variables_initializer())
+        self.sess.run(tf.initialize_all_variables())
 
     def init_network(self):
-        self.input_ph = tf.placeholder(tf.float32, [None, self.input_num])
-        self.standard_y_ph = tf.placeholder(tf.float32, [None, 1])
+        self.input_ph = tf.placeholder(tf.float32, [None, self.input_num], name="input_ph")
+        self.standard_y_ph = tf.placeholder(tf.int32, [None], name="y_ph")
+        self.y = tf.one_hot(self.standard_y_ph, self.fc_nums[-1], 1, 0)
+        # print(self.y)
         with tf.variable_scope('fc', reuse=False):
             out = self.input_ph
             for output_num in self.fc_nums:
@@ -25,23 +27,28 @@ class Network:
                     kernel_regularizer=tf.contrib.layers.l2_regularizer(0.003)
                 )
                 out = layer
-            self.logits = tf.nn.softmax(logits=out)
+            self.logits = out
+            print(self.logits)
 
         self.out = tf.argmax(input=self.logits, axis=1)
-        self.cross_entropy = tf.nn.sigmoid_cross_entropy_with_logits(labels=self.standard_y_ph, logits=self.logits)
+        self.cross_entropy = tf.nn.softmax_cross_entropy_with_logits(labels=self.y, logits=self.logits)
         self.loss = tf.reduce_mean(self.cross_entropy)
 
-        self.trainer = tf.train.Optimizer.AdamOptimizer(self.learning_rate).minimize(self.loss)
+        self.trainer = tf.train.AdamOptimizer(self.learning_rate).minimize(self.loss)
 
-    def train(self, input_x):
-        self.sess.run([self.loss, self.trainer], feed_dict={
-            self.input_ph: input_x
+    def train(self, input_x, input_y):
+        # print(input_x.shape)
+        # print(input_y.shape)
+        self.train_step += 1
+        loss, _ = self.sess.run([self.loss, self.trainer], feed_dict={
+            self.input_ph: input_x,
+            self.standard_y_ph: input_y
         })
-        print(self.loss)
+        if self.train_step % 100 == 0:
+            print("now train step: %d"%self.train_step, "now loss % f"%loss)
         return self.loss
 
     def output(self, input_x, input_y):
         return self.sess.run(self.out, feed_dict={
-            self.input_ph: input_x,
-            self.out: input_y
+            self.input_ph: input_x
         })
