@@ -70,7 +70,7 @@ class Autoencoder:
 if __name__ == "__main__":
     ae = Autoencoder()
     loader = Loader(LABEL_FILE_PATH, DATA_FILE_PATH, 7, TRAINING_SET_PERCENT, FIRST_TIME_TO_READ_FILE)
-    
+
     train_step = 2000
 
     for i in range(train_step):
